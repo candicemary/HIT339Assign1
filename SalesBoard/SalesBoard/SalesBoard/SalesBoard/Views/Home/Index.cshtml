@@ -1,0 +1,133 @@
+﻿@model IEnumerable<SalesBoard.Models.Items>
+
+@{
+    ViewData["Title"] = "For Sale";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Product Page</h2>
+<style>
+    ul,
+    li,
+    div,
+    dl,
+    dt,
+    dd {
+        list-style: none;
+    }
+
+    .test-wrap {
+        width: 1000px;
+        margin: 0 auto;
+        clear: both;
+    }
+
+        .test-wrap .experience li {
+            float: left;
+            width: 300px;
+            margin: 40px 15px 15px 0;
+            height: 300px;
+            position: relative;
+        }
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div.search {
+        height: 40px;
+        width: 500px;
+    }
+
+        div.search form {
+            width: 100%;
+            height: 100%;
+        }
+
+            div.search form input:nth-child(2) {
+                width: 400px;
+                height: 100%;
+                font-size: 16px;
+                text-indent: 40px;
+                border: none;
+                float: left;
+            }
+
+            div.search form input:nth-child(3) {
+                width: 100px;
+                height: 100%;
+                font-size: 16px;
+                letter-spacing: 5px;
+                border: none;
+            }
+
+            div.search form img {
+                position: absolute;
+                left: 50vw;
+                transform: translateX(-250px);
+                margin-top: 10px;
+                margin-left: 10px;
+                height: 20px;
+            }
+</style>
+<body>
+    <div class="search">
+        <form asp-action="Index" method="post">
+            <img src="./search_ico.png" alt="">
+            <input type="text" name="condition" placeholder="Please enter the searching condition">
+            <input type="submit" value="Search">
+        </form>
+    </div>
+</body>
+<div class="test-wrap">
+    <ul class="cf more_box experience" id="experience">
+        @foreach (var item in Model)
+        {
+
+            <li>
+                <div class="card" style="width:400px">
+                    <img class="card-img-top" src="~/uploads//img/@item.PictureSrc" alt="Card image" width="200" height="200">
+                    <div class="card-body">
+                        <h4 class="card-title">@item.Name</h4>
+                        <p class="card-text">@item.Description</p>
+                        <p class="card-text"><span>Price：</span><span style="color:red">@item.Price</span>&nbsp;&nbsp;<span>Stock：@item.Quantity</span></p>
+                        <button onclick="SetCookie('@item.Id',@item.Quantity)" class="btn btn-primary">Buy</button>
+
+                    </div>
+                </div>
+
+            </li>
+        }
+
+    </ul>
+</div>
+
+
+<script>
+
+
+    var value = 0;
+    function SetCookie(name, number) {
+        if (value >= number) {
+            alert("The quantities of Shopping products are over than the stock.Items cannot add.")
+        } else {
+            value++;
+            document.cookie = name + "=" + value;
+        }
+
+
+
+    }
+
+
+
+</script>
